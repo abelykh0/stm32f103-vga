@@ -3,6 +3,7 @@
 
 #include <stdint.h>
 
+#include "attribute.h"
 #include "settings.h"
 #include "VideoSettings.h"
 
@@ -28,14 +29,17 @@
 
 namespace Vga
 {
-    extern volatile uint8_t VideoMemoryPixels[];
-    extern volatile uint8_t VideoMemoryAttributes[];
+    extern uint8_t* VideoMemoryPixels;
+    extern uint8_t* VideoMemoryAttributes;
+    extern Attribute* AttributeBase;
+	extern Attribute DefaultAttributeDefinition;
 
 	void InitVga(VideoSettings* videoSettings);
 
-    volatile uint8_t* GetBitmapAddress(uint8_t vline);
-    volatile uint8_t* GetBitmapAddress(uint8_t vline, uint8_t character);
+    uint8_t* GetBitmapAddress(uint8_t vline);
+    uint8_t* GetBitmapAddress(uint8_t vline, uint8_t character);
 
+    void InitAttribute(Attribute attribute, uint8_t backColor, uint8_t foreColor);
     void delay_frame();
 	void clear_screen(uint8_t attribute);
 }

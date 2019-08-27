@@ -1,8 +1,9 @@
 #include <string.h>
 
-#include "startup.h"
-#include "vgacore.h"
 #include "font8x8.h"
+#include "startup.h"
+#include "timing.h"
+#include "vgacore.h"
 
 // Horizontal resolution
 #define	HSIZE_PIXELS  (HSIZE_CHARS * 8)
@@ -28,16 +29,22 @@ static volatile uint8_t *GPIO_ODR;
 
 namespace Vga
 {
-volatile uint8_t VideoMemoryPixels[BITMAP_SIZE];
-volatile uint8_t VideoMemoryColors[ATTRIBUTES_SIZE];
+uint8_t* VideoMemoryPixels;
+uint8_t* VideoMemoryAttributes;
+Attribute DefaultAttributeDefinition;
+Attribute* AttributeBase = &DefaultAttributeDefinition;
 
-void InitHSync(Vga::Timing::Polarity polarity, int wholeLine, int syncPulse, int startDraw);
-void InitVSync(Vga::Timing::Polarity polarity, int wholeFrame, int syncPulse, int startDraw);
+void InitHSync(Timing::Polarity polarity, int wholeLine, int syncPulse, int startDraw);
+void InitVSync(Timing::Polarity polarity, int wholeFrame, int syncPulse, int startDraw);
 }
 
 void Vga::InitVga(VideoSettings* videoSettings)
 {
 	const Timing* timing = videoSettings->Timing;
+	VideoMemoryPixels = videoSettings->ScreenPixels;
+	VideoMemoryAttributes = videoSettings->ScreenAttributes;
+	InitAttribute(DefaultAttributeDefinition, BACK_COLOR, FORE_COLOR);
+	clear_screen(0);
 
 	GPIO_InitTypeDef gpioInit;
 
@@ -90,12 +97,12 @@ void Vga::InitVga(VideoSettings* videoSettings)
     vdraw = 0;
 }
 
-volatile uint8_t* Vga::GetBitmapAddress(uint8_t vline)
+uint8_t* Vga::GetBitmapAddress(uint8_t vline)
 {
     return &Vga::VideoMemoryPixels[vline * HSIZE_CHARS];
 }
 
-volatile uint8_t* Vga::GetBitmapAddress(uint8_t vline, uint8_t character)
+uint8_t* Vga::GetBitmapAddress(uint8_t vline, uint8_t character)
 {
     character &= 0B00011111;
     return Vga::GetBitmapAddress(vline) + character;
@@ -193,7 +200,7 @@ __irq void TIM4_IRQHandler()
 }
 
 void Vga::InitVSync(
-    Vga::Timing::Polarity polarity,
+    Timing::Polarity polarity,
     int wholeFrame,
     int syncPulse,
     int startDraw)
@@ -223,7 +230,7 @@ void Vga::InitVSync(
     TIM_OC_InitTypeDef sConfigOC;
 
     // VSync on pin PB6
-    sConfigOC.OCMode = polarity == Vga::Timing::Polarity::negative ? TIM_OCMODE_PWM2 : TIM_OCMODE_PWM1;
+    sConfigOC.OCMode = polarity == Timing::Polarity::negative ? TIM_OCMODE_PWM2 : TIM_OCMODE_PWM1;
     sConfigOC.Pulse = syncPulse;
     sConfigOC.OCPolarity = TIM_OCPOLARITY_HIGH;
     sConfigOC.OCIdleState = TIM_OCIDLESTATE_RESET;
@@ -247,7 +254,7 @@ void Vga::InitVSync(
 }
 
 void Vga::InitHSync(
-    Vga::Timing::Polarity polarity,
+    Timing::Polarity polarity,
     int wholeLine,
     int syncPulse,
     int startDraw)
@@ -312,7 +319,7 @@ void Vga::InitHSync(
     HAL_NVIC_EnableIRQ(TIM3_IRQn);
 
     // HSync on pin PB0
-    sConfigOC.OCMode = polarity == Vga::Timing::Polarity::negative ? TIM_OCMODE_PWM2 : TIM_OCMODE_PWM1;
+    sConfigOC.OCMode = polarity == Timing::Polarity::negative ? TIM_OCMODE_PWM2 : TIM_OCMODE_PWM1;
     sConfigOC.Pulse = syncPulse;
     sConfigOC.OCIdleState = TIM_OCIDLESTATE_RESET;
     sConfigOC.OCPolarity = TIM_OCPOLARITY_LOW;
@@ -339,3 +346,19 @@ void Vga::InitHSync(
     __HAL_TIM_ENABLE(&htim2);
     //__HAL_TIM_ENABLE(&htim3);
 }
+
+void Vga::InitAttribute(Attribute attribute, uint8_t backColor, uint8_t foreColor)
+{
+	for (uint8_t i = 0; i < 16; i++)
+	{
+		uint8_t value = i;
+		uint8_t index = (i << 2);
+		for (uint8_t bit = 0; bit < 4; bit++)
+		{
+			attribute[index] = (value & 0x08) ?  foreColor : backColor;
+			value <<= 1;
+			index++;
+		}
+	}
+}
+

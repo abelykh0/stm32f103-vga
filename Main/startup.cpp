@@ -9,7 +9,6 @@
 
 static uint8_t _screenPixels[HSIZE_CHARS * VSIZE_CHARS + 1];
 static uint8_t _screenAttributes[HSIZE_CHARS * VSIZE_CHARS + 1];
-static uint8_t _defaultAttribute[64];
 
 using namespace Vga;
 
