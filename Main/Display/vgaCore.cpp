@@ -4,6 +4,7 @@
 #include "startup.h"
 #include "timing.h"
 #include "vgacore.h"
+#include "vgaDraw.h"
 
 #define REPEAT_LINES 2
 #define __irq extern "C"
@@ -126,10 +127,7 @@ __irq void TIM2_IRQHandler()
         if (vflag)
         {
             // Wait for interrupt
-            __asm__ volatile("wfi \n\t" ::
-                                 :);
-
-            //DoDraw();
+        	__WFI();
         }
     }
     else
@@ -151,7 +149,11 @@ __irq void TIM3_IRQHandler()
         {
             __disable_irq();
 
-            //DoDraw();
+            vga_draw_impl(
+				Vga::GetBitmapAddress(vline),
+				(uint32_t*)Vga::AttributeBase,
+				&Vga::VideoMemoryAttributes[vline / 8 * HSIZE_CHARS],
+				GPIO_ODR);
 
             vdraw++;
             if (vdraw == 2)
