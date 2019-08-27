@@ -5,15 +5,7 @@
 #include "timing.h"
 #include "vgacore.h"
 
-// Horizontal resolution
-#define	HSIZE_PIXELS  (HSIZE_CHARS * 8)
-
-// Vertical resolution
-#define	VSIZE_PIXELS  (VSIZE_CHARS * 8)
 #define REPEAT_LINES 2
-
-#define	BITMAP_SIZE     (HSIZE_CHARS * VSIZE_PIXELS)
-#define	ATTRIBUTES_SIZE (HSIZE_CHARS * VSIZE_CHARS)
 #define __irq extern "C"
 
 static volatile int vline = 0; /* The current line being drawn */

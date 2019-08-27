@@ -27,6 +27,16 @@
 
 */
 
+
+// Horizontal resolution
+#define	HSIZE_PIXELS  (HSIZE_CHARS * 8)
+
+// Vertical resolution
+#define	VSIZE_PIXELS  (VSIZE_CHARS * 8)
+
+#define	BITMAP_SIZE     (HSIZE_CHARS * VSIZE_PIXELS)
+#define	ATTRIBUTES_SIZE (HSIZE_CHARS * VSIZE_CHARS)
+
 namespace Vga
 {
     extern uint8_t* VideoMemoryPixels;
