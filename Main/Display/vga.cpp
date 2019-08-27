@@ -345,6 +345,11 @@ void Vga::setCursorPosition(uint8_t x, uint8_t y)
     }
 }
 
+void Vga::InvertColor()
+{
+	// TODO
+}
+
 void Vga::printAt(uint8_t x, uint8_t y, const char str[], uint8_t attribute)
 {
     setCursorPosition(x, y);

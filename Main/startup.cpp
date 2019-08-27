@@ -3,7 +3,7 @@
 #include <stdio.h>
 
 #include "startup.h"
-#include "Display/vgaCore.h"
+#include "Display/vga.h"
 #include "Display/timing.h"
 #include "Keyboard/ps2Keyboard.h"
 
@@ -27,6 +27,12 @@ extern "C" void setup()
 
 	// Initialize PS2 Keyboard
 	Ps2_Initialize();
+
+    // Display frame
+	printAt(0, 0, "\xC9", 0); // ╔
+	printAt(HSIZE_CHARS - 1, 0, "\xBB", 0); // ╗
+	printAt(0, VSIZE_CHARS - 1, "\xC8", 0); // ╚
+	printAt(HSIZE_CHARS - 1, VSIZE_CHARS - 1, "\xBC", 0); // ╝
 }
 
 extern "C" void loop()
