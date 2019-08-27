@@ -17,8 +17,8 @@ class VideoSettings
 	uint8_t TextRows;
 
 	// video memory
-	uint16_t* ScreenCharacters;
-	uint32_t* ScreenAttributes;
+	uint8_t* ScreenPixels;
+	uint8_t* ScreenAttributes;
 };
 
 }

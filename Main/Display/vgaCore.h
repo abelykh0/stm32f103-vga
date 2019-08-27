@@ -2,7 +2,9 @@
 #define _VGACORE_H_
 
 #include <stdint.h>
-#include "videosettings.h"
+
+#include "settings.h"
+#include "VideoSettings.h"
 
 /*
 	Pinout
@@ -26,14 +28,16 @@
 
 namespace Vga
 {
-	extern const Vga::VideoSettings* settings;
-	extern uint16_t* ScreenCharacters;
-	extern uint32_t* ScreenAttributes;
-	extern uint16_t horizontalPixelCount;
-	extern uint8_t StandardAttribute[128];
+    extern volatile uint8_t VideoMemoryPixels[];
+    extern volatile uint8_t VideoMemoryAttributes[];
 
 	void InitVga(VideoSettings* videoSettings);
-    void ClearScreen();
+
+    volatile uint8_t* GetBitmapAddress(uint8_t vline);
+    volatile uint8_t* GetBitmapAddress(uint8_t vline, uint8_t character);
+
+    void delay_frame();
+	void clear_screen(uint8_t attribute);
 }
 
 #endif
