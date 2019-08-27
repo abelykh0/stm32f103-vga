@@ -7,26 +7,29 @@
 #include "Display/timing.h"
 #include "Keyboard/ps2Keyboard.h"
 
-static uint8_t _screenPixels[HSIZE_CHARS * VSIZE_CHARS + 1];
-static uint8_t _screenAttributes[HSIZE_CHARS * VSIZE_CHARS + 1];
-
 using namespace Vga;
+
+static uint8_t _screenPixels[HSIZE_CHARS * VSIZE_CHARS];
+static uint8_t _screenAttributes[HSIZE_CHARS * VSIZE_CHARS];
+static Attribute _defaultAttributeDefinition;
 
 static VideoSettings Video {
 	&TIMING,
 	HSIZE_CHARS, VSIZE_CHARS,
-	_screenPixels, _screenAttributes
+	_screenPixels, _screenAttributes, &_defaultAttributeDefinition
 };
+
 extern "C" void initialize()
 {
 }
 
 extern "C" void setup()
 {
+	InitAttribute(_defaultAttributeDefinition, BACK_COLOR, FORE_COLOR);
 	InitVga(&Video);
 
 	// Initialize PS2 Keyboard
-	Ps2_Initialize();
+	//Ps2_Initialize();
 
     // Display frame
 	printAt(0, 0, "\xC9", 0); // ╔

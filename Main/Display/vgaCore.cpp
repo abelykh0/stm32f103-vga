@@ -24,8 +24,7 @@ namespace Vga
 {
 uint8_t* VideoMemoryPixels;
 uint8_t* VideoMemoryAttributes;
-Attribute DefaultAttributeDefinition;
-Attribute* AttributeBase = &DefaultAttributeDefinition;
+Attribute* AttributeBase;
 
 void InitHSync(Timing::Polarity polarity, int wholeLine, int syncPulse, int startDraw);
 void InitVSync(Timing::Polarity polarity, int wholeFrame, int syncPulse, int startDraw);
@@ -36,7 +35,7 @@ void Vga::InitVga(VideoSettings* videoSettings)
 	const Timing* timing = videoSettings->Timing;
 	VideoMemoryPixels = videoSettings->ScreenPixels;
 	VideoMemoryAttributes = videoSettings->ScreenAttributes;
-	InitAttribute(DefaultAttributeDefinition, BACK_COLOR, FORE_COLOR);
+	AttributeBase = videoSettings->AttributeBase;
 	clear_screen(0);
 
 	GPIO_InitTypeDef gpioInit;

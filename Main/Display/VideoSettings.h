@@ -2,6 +2,7 @@
 #define _VIDEOSETTINGS_H
 
 #include <stdint.h>
+#include "attribute.h"
 #include "timing.h"
 
 namespace Vga
@@ -19,6 +20,7 @@ class VideoSettings
 	// video memory
 	uint8_t* ScreenPixels;
 	uint8_t* ScreenAttributes;
+	Attribute* AttributeBase;
 };
 
 }
