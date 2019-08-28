@@ -23,7 +23,7 @@ void InvertColor();
 
 void Vga::draw_char(const uint8_t *f, uint16_t x, uint16_t y, uint8_t c)
 {
-    bitmap(x, y, f, (c * 8) + 3, 8, 8);
+    bitmap(x, y, f, c * 8, 8, 8);
 }
 
 void Vga::draw_text(const uint8_t *f, uint16_t x, uint16_t y, const char *str)
