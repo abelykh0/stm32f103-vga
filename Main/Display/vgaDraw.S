@@ -18,48 +18,48 @@ vga_draw_impl:
 
 	@ variables
 	pixels      .req r4
-	attr_addr   .req r5
-	attr_offset .req r6
-	tmp1        .req r7
-	tmp2        .req r8
+	attr_offset .req r5
+	tmp1        .req r6
+	tmp2        .req r7
 
-	push {r4, r5, r6, r7, r8}          @ 4
+	push {r4, r5, r6, r7}
 
 	@ prepare
 	ldr pixels, [pix], #4
-	ror pixels, #30
-	and attr_offset, pixels, #60
-	ldrb attr_addr, [attr], #1
-	add attr_addr, attr_base, attr_addr, LSL #6
+	ldrb attr_offset, [attr], #1
+	and tmp1, pixels, #15
+	add attr_offset, tmp1, attr_offset, LSL #4
+	ldr tmp1, [attr_base, attr_offset, LSL #2]
 
 	.rept 8
 		@ character 0
 
-		ldr tmp1, [attr_addr, attr_offset]          @ 2*
+		ror pixels, #28                             @ 1
+		and tmp2, pixels, #15                       @ 1
+		strb tmp1, [odr]                            @ 2
+
+		ror tmp1, #8                                @ 1
+		add attr_offset, tmp2, attr_offset, LSL #4  @ 1
+		strb tmp1, [odr]                            @ 2
+
+		ror tmp1, #8                                @ 1
+		ldr tmp2, [attr_base, attr_offset, LSL #2]  @ 1*
 		strb tmp1, [odr]                            @ 2
 
 		ror tmp1, #8                                @ 1
 		ror pixels, #28                             @ 1
 		strb tmp1, [odr]                            @ 2
 
-		ror tmp1, #8                                @ 1
-		and attr_offset, pixels, #60                @ 1
-		strb tmp1, [odr]                            @ 2
-
-		ror tmp1, #8                                @ 1
- 		ldr tmp2, [attr_addr, attr_offset]          @ 1*
-		strb tmp1, [odr]                            @ 2
-
-		ror pixels, #28                             @ 1
-		ldrb attr_addr, [attr], #1                  @ 1*
+		and tmp1, pixels, #15                       @ 1
+		add attr_offset, tmp1, attr_offset, LSL #4  @ 1
 		strb tmp2, [odr]                            @ 2
 
 		ror tmp2, #8                                @ 1
-		add attr_addr, attr_base, attr_addr, LSL #6 @ 1
+		ldr tmp1, [attr_base, attr_offset, LSL #2]  @ 1*
 		strb tmp2, [odr]                            @ 2
 
 		ror tmp2, #8                                @ 1
-		and attr_offset, pixels, #60                @ 1
+		ldrb attr_offset, [attr], #1                @ 1*
 		strb tmp2, [odr]                            @ 2
 
 		ror tmp2, #8                                @ 1
@@ -68,243 +68,111 @@ vga_draw_impl:
 
 		@ character 1
 
-		ldr tmp1, [attr_addr, attr_offset]          @ 2*
+		ror pixels, #28                             @ 1
+		and tmp2, pixels, #15                       @ 1
+		strb tmp1, [odr]                            @ 2
+
+		ror tmp1, #8                                @ 1
+		add attr_offset, tmp2, attr_offset, LSL #4  @ 1
+		strb tmp1, [odr]                            @ 2
+
+		ror tmp1, #8                                @ 1
+		ldr tmp2, [attr_base, attr_offset, LSL #2]  @ 1*
 		strb tmp1, [odr]                            @ 2
 
 		ror tmp1, #8                                @ 1
 		ror pixels, #28                             @ 1
 		strb tmp1, [odr]                            @ 2
 
-		ror tmp1, #8                                @ 1
-		and attr_offset, pixels, #60                @ 1
-		strb tmp1, [odr]                            @ 2
-
-		ror tmp1, #8                                @ 1
- 		ldr tmp2, [attr_addr, attr_offset]          @ 1*
-		strb tmp1, [odr]                            @ 2
-
-		ror pixels, #28                             @ 1
-		ldrb attr_addr, [attr], #1                  @ 1*
+		and tmp1, pixels, #15                       @ 1
+		add attr_offset, tmp1, attr_offset, LSL #4  @ 1
 		strb tmp2, [odr]                            @ 2
 
 		ror tmp2, #8                                @ 1
-		add attr_addr, attr_base, attr_addr, LSL #6 @ 1
+		ldr tmp1, [attr_base, attr_offset, LSL #2]  @ 1*
 		strb tmp2, [odr]                            @ 2
 
 		ror tmp2, #8                                @ 1
-		ror pixels, #28                             @ 1
+		ldrb attr_offset, [attr], #1                @ 1*
 		strb tmp2, [odr]                            @ 2
 
 		ror tmp2, #8                                @ 1
-		and attr_offset, pixels, #60                @ 1
+		nop                                         @ 1
 		strb tmp2, [odr]                            @ 2
 
 		@ character 2
 
-		ldr tmp1, [attr_addr, attr_offset]          @ 2*
+		ror pixels, #28                             @ 1
+		and tmp2, pixels, #15                       @ 1
+		strb tmp1, [odr]                            @ 2
+
+		ror tmp1, #8                                @ 1
+		add attr_offset, tmp2, attr_offset, LSL #4  @ 1
+		strb tmp1, [odr]                            @ 2
+
+		ror tmp1, #8                                @ 1
+		ldr tmp2, [attr_base, attr_offset, LSL #2]  @ 1*
 		strb tmp1, [odr]                            @ 2
 
 		ror tmp1, #8                                @ 1
 		ror pixels, #28                             @ 1
 		strb tmp1, [odr]                            @ 2
 
-		ror tmp1, #8                                @ 1
-		and attr_offset, pixels, #60                @ 1
-		strb tmp1, [odr]                            @ 2
-
-		ror tmp1, #8                                @ 1
- 		ldr tmp2, [attr_addr, attr_offset]          @ 1*
-		strb tmp1, [odr]                            @ 2
-
-		ror pixels, #28                             @ 1
-		ldrb attr_addr, [attr], #1                  @ 1*
+		and tmp1, pixels, #15                       @ 1
+		add attr_offset, tmp1, attr_offset, LSL #4  @ 1
 		strb tmp2, [odr]                            @ 2
 
 		ror tmp2, #8                                @ 1
-		add attr_addr, attr_base, attr_addr, LSL #6 @ 1
+		ldr tmp1, [attr_base, attr_offset, LSL #2]  @ 1*
 		strb tmp2, [odr]                            @ 2
 
 		ror tmp2, #8                                @ 1
-		ror pixels, #28                             @ 1
+		ldrb attr_offset, [attr], #1                @ 1*
 		strb tmp2, [odr]                            @ 2
 
 		ror tmp2, #8                                @ 1
-		and attr_offset, pixels, #60                @ 1
+		nop                                         @ 1
 		strb tmp2, [odr]                            @ 2
 
 		@ character 3
 
-		ldr tmp1, [attr_addr, attr_offset]          @ 2*
+		ror pixels, #28                             @ 1
+		and tmp2, pixels, #15                       @ 1
+		strb tmp1, [odr]                            @ 2
+
+		ror tmp1, #8                                @ 1
+		add attr_offset, tmp2, attr_offset, LSL #4  @ 1
+		strb tmp1, [odr]                            @ 2
+
+		ror tmp1, #8                                @ 1
+		ldr tmp2, [attr_base, attr_offset, LSL #2]  @ 1*
 		strb tmp1, [odr]                            @ 2
 
 		ror tmp1, #8                                @ 1
 		ror pixels, #28                             @ 1
 		strb tmp1, [odr]                            @ 2
 
-		ror tmp1, #8                                @ 1
-		and attr_offset, pixels, #60                @ 1
-		strb tmp1, [odr]                            @ 2
-
-		ror tmp1, #8                                @ 1
- 		ldr tmp2, [attr_addr, attr_offset]          @ 1*
-		strb tmp1, [odr]                            @ 2
-
-		ror pixels, #28                             @ 1
-		ldrb attr_addr, [attr], #1                  @ 1*
+		and tmp1, pixels, #15                       @ 1
+		add attr_offset, tmp1, attr_offset, LSL #4  @ 1
 		strb tmp2, [odr]                            @ 2
 
 		ror tmp2, #8                                @ 1
-		add attr_addr, attr_base, attr_addr, LSL #6 @ 1
+		ldr tmp1, [attr_base, attr_offset, LSL #2]  @ 1*
 		strb tmp2, [odr]                            @ 2
 
 		ror tmp2, #8                                @ 1
-		ror pixels, #28                             @ 1
+		ldrb attr_offset, [attr], #1                @ 1*
 		strb tmp2, [odr]                            @ 2
 
 		ror tmp2, #8                                @ 1
-		and attr_offset, pixels, #60                @ 1
+		ldr pixels, [pix], #4                       @ 1*
 		strb tmp2, [odr]                            @ 2
 	.endr
-
-	@ character 34
-
-	ldr tmp1, [attr_addr, attr_offset]          @ 2*
-	strb tmp1, [odr]                            @ 2
-
-	ror tmp1, #8                                @ 1
-	ror pixels, #28                             @ 1
-	strb tmp1, [odr]                            @ 2
-
-	ror tmp1, #8                                @ 1
-	and attr_offset, pixels, #60                @ 1
-	strb tmp1, [odr]                            @ 2
-
-	ror tmp1, #8                                @ 1
-	ldr tmp2, [attr_addr, attr_offset]          @ 1*
-	strb tmp1, [odr]                            @ 2
-
-	ror pixels, #28                             @ 1
-	ldrb attr_addr, [attr], #1                  @ 1*
-	strb tmp2, [odr]                            @ 2
-
-	ror tmp2, #8                                @ 1
-	and attr_addr, attr_base, attr_addr, LSR #6 @ 1
-	strb tmp2, [odr]                            @ 2
-
-	ror tmp2, #8                                @ 1
-	ror pixels, #28                             @ 1
-	strb tmp2, [odr]                            @ 2
-
-	ror tmp2, #8                                @ 1
-	and attr_offset, pixels, #60                @ 1
-	strb tmp2, [odr]                            @ 2
-
-	@ character 35
-
-	ror pixels, #28                             @ 1
-	and attr_offset, pixels, #60                @ 1
-	strb tmp1, [odr]                            @ 2
-
-	ror tmp1, #8                                @ 1
-	ldr tmp2, [attr_addr, attr_offset]          @ 1*
-	strb tmp1, [odr]                            @ 2
-
-	ror tmp1, #8                                @ 1
-	ror pixels, #28                             @ 1
-	strb tmp1, [odr]                            @ 2
-
-	ror tmp1, #8                                @ 1
-	ldr attr_addr, [attr], #1                   @ 1*
-	strb tmp1, [odr]                            @ 2
-
-	nop                                         @ 1
-	nop                                         @ 1
-	strb tmp2, [odr]                            @ 2
-
-	ror tmp2, #8                                @ 1
-	and attr_addr, attr_base, attr_addr, LSR #6 @ 1
-	strb tmp2, [odr]                            @ 2
-
-	ror tmp2, #8                                @ 1
-	and attr_offset, pixels, #60                @ 1
-	strb tmp2, [odr]                            @ 2
-
-	ror tmp2, #8                                @ 1
-	ldr tmp1, [attr_addr, attr_offset]          @ 1*
-	strb tmp2, [odr]                            @ 2
-
-	@ character 36
-
-	ror pixels, #28                             @ 1
-	and attr_offset, pixels, #60                @ 1
-	strb tmp1, [odr]                            @ 2
-
-	ror tmp1, #8                                @ 1
-	ldr tmp2, [attr_addr, attr_offset]          @ 1*
-	strb tmp1, [odr]                            @ 2
-
-	ror tmp1, #8                                @ 1
-	ror pixels, #28                             @ 1
-	strb tmp1, [odr]                            @ 2
-
-	ror tmp1, #8                                @ 1
-	ldr attr_addr, [attr], #1                   @ 1*
-	strb tmp1, [odr]                            @ 2
-
-	nop                                         @ 1
-	nop                                         @ 1
-	strb tmp2, [odr]                            @ 2
-
-	ror tmp2, #8                                @ 1
-	and attr_addr, attr_base, attr_addr, LSR #6 @ 1
-	strb tmp2, [odr]                            @ 2
-
-	ror tmp2, #8                                @ 1
-	and attr_offset, pixels, #60                @ 1
-	strb tmp2, [odr]                            @ 2
-
-	ror tmp2, #8                                @ 1
-	ldr tmp1, [attr_addr, attr_offset]          @ 1*
-	strb tmp2, [odr]                            @ 2
-
-	@ character 37
-
-	ror pixels, #28                             @ 1
-	and attr_offset, pixels, #60                @ 1
-	strb tmp1, [odr]                            @ 2
-
-	ror tmp1, #8                                @ 1
-	ldr tmp2, [attr_addr, attr_offset]          @ 1*
-	strb tmp1, [odr]                            @ 2
-
-	ror tmp1, #8                                @ 1
-	ror pixels, #28                             @ 1
-	strb tmp1, [odr]                            @ 2
-
-	ror tmp1, #8                                @ 1
-	nop                                         @ 1
-	strb tmp1, [odr]                            @ 2
-
-	nop                                         @ 1
-	nop                                         @ 1
-	strb tmp2, [odr]                            @ 2
-
-	ror tmp2, #8                                @ 1
-	nop                                         @ 1
-	strb tmp2, [odr]                            @ 2
-
-	ror tmp2, #8                                @ 1
-	nop                                         @ 1
-	strb tmp2, [odr]                            @ 2
-
-	ror tmp2, #8                                @ 1
-	nop                                         @ 1
-	strb tmp2, [odr]                            @ 2
 
 	@ 0 at the end
 	mov r4, #0                     @ 1
 	nop                            @ 1
 	strb r4, [odr]                 @ 2
 
-	pop	{r4, r5, r6, r7, r8}               @ 4
+	pop	{r4, r5, r6, r7}
 	bx lr
