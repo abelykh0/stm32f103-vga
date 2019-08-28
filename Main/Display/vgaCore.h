@@ -45,10 +45,10 @@ namespace Vga
 
 	void InitVga(VideoSettings* videoSettings);
 
-    uint8_t* GetBitmapAddress(uint8_t vline);
-    uint8_t* GetBitmapAddress(uint8_t vline, uint8_t character);
+    uint8_t* GetBitmapAddress(uint16_t vline);
+    uint8_t* GetBitmapAddress(uint16_t vline, uint8_t character);
 
-    void InitAttribute(Attribute attribute, uint8_t backColor, uint8_t foreColor);
+    void InitAttribute(Attribute* attribute, uint8_t backColor, uint8_t foreColor);
     void delay_frame();
 	void clear_screen(uint8_t attribute);
 }

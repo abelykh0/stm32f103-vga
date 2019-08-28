@@ -30,7 +30,7 @@ vga_draw_impl:
 	ror pixels, #30
 	and attr_offset, pixels, #60
 	ldrb attr_addr, [attr], #1
-	and attr_addr, attr_base, attr_addr, LSR #6
+	add attr_addr, attr_base, attr_addr, LSL #6
 
 	.rept 8
 		@ character 0
@@ -55,15 +55,15 @@ vga_draw_impl:
 		strb tmp2, [odr]                            @ 2
 
 		ror tmp2, #8                                @ 1
-		and attr_addr, attr_base, attr_addr, LSR #6 @ 1
-		strb tmp2, [odr]                            @ 2
-
-		ror tmp2, #8                                @ 1
-		ror pixels, #28                             @ 1
+		add attr_addr, attr_base, attr_addr, LSL #6 @ 1
 		strb tmp2, [odr]                            @ 2
 
 		ror tmp2, #8                                @ 1
 		and attr_offset, pixels, #60                @ 1
+		strb tmp2, [odr]                            @ 2
+
+		ror tmp2, #8                                @ 1
+		nop                                         @ 1
 		strb tmp2, [odr]                            @ 2
 
 		@ character 1
@@ -88,7 +88,7 @@ vga_draw_impl:
 		strb tmp2, [odr]                            @ 2
 
 		ror tmp2, #8                                @ 1
-		and attr_addr, attr_base, attr_addr, LSR #6 @ 1
+		add attr_addr, attr_base, attr_addr, LSL #6 @ 1
 		strb tmp2, [odr]                            @ 2
 
 		ror tmp2, #8                                @ 1
@@ -121,7 +121,7 @@ vga_draw_impl:
 		strb tmp2, [odr]                            @ 2
 
 		ror tmp2, #8                                @ 1
-		and attr_addr, attr_base, attr_addr, LSR #6 @ 1
+		add attr_addr, attr_base, attr_addr, LSL #6 @ 1
 		strb tmp2, [odr]                            @ 2
 
 		ror tmp2, #8                                @ 1
@@ -154,7 +154,7 @@ vga_draw_impl:
 		strb tmp2, [odr]                            @ 2
 
 		ror tmp2, #8                                @ 1
-		and attr_addr, attr_base, attr_addr, LSR #6 @ 1
+		add attr_addr, attr_base, attr_addr, LSL #6 @ 1
 		strb tmp2, [odr]                            @ 2
 
 		ror tmp2, #8                                @ 1

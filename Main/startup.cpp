@@ -25,7 +25,7 @@ extern "C" void initialize()
 
 extern "C" void setup()
 {
-	InitAttribute(_defaultAttributeDefinition, BACK_COLOR, FORE_COLOR);
+	InitAttribute(&_defaultAttributeDefinition, BACK_COLOR, FORE_COLOR);
 	InitVga(&Video);
 
 	// Initialize PS2 Keyboard
@@ -36,6 +36,16 @@ extern "C" void setup()
 	printAt(HSIZE_CHARS - 1, 0, "\xBB", 0); // ╗
 	printAt(0, VSIZE_CHARS - 1, "\xC8", 0); // ╚
 	printAt(HSIZE_CHARS - 1, VSIZE_CHARS - 1, "\xBC", 0); // ╝
+    for (int i = 1; i < HSIZE_CHARS - 1; i++)
+    {
+    	printAt(i, 0, "\x0CD", 0); // ═
+    	printAt(i, VSIZE_CHARS - 1, "\x0CD", 0); // ═
+    }
+    for (int i = 1; i < VSIZE_CHARS - 1; i++)
+    {
+    	printAt(0, i, "\x0BA", 0); // ║
+    	printAt(HSIZE_CHARS - 1, i, "\x0BA", 0); // ║
+    }
 }
 
 extern "C" void loop()

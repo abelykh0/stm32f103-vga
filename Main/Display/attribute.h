@@ -9,7 +9,6 @@ namespace Vga
 typedef struct _Attribute
 {
 	uint8_t a[64];
-	uint8_t& operator[](int i) { return a[i]; }
 } Attribute;
 
 }

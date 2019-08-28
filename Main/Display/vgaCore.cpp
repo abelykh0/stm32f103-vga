@@ -89,14 +89,14 @@ void Vga::InitVga(VideoSettings* videoSettings)
     vdraw = 0;
 }
 
-uint8_t* Vga::GetBitmapAddress(uint8_t vline)
+uint8_t* Vga::GetBitmapAddress(uint16_t vline)
 {
     return &Vga::VideoMemoryPixels[vline * HSIZE_CHARS];
 }
 
-uint8_t* Vga::GetBitmapAddress(uint8_t vline, uint8_t character)
+uint8_t* Vga::GetBitmapAddress(uint16_t vline, uint8_t character)
 {
-    character &= 0B00011111;
+    character &= 0B00111111;
     return Vga::GetBitmapAddress(vline) + character;
 }
 
@@ -340,7 +340,7 @@ void Vga::InitHSync(
     //__HAL_TIM_ENABLE(&htim3);
 }
 
-void Vga::InitAttribute(Attribute attribute, uint8_t backColor, uint8_t foreColor)
+void Vga::InitAttribute(Attribute* attribute, uint8_t backColor, uint8_t foreColor)
 {
 	for (uint8_t i = 0; i < 16; i++)
 	{
@@ -348,7 +348,7 @@ void Vga::InitAttribute(Attribute attribute, uint8_t backColor, uint8_t foreColo
 		uint8_t index = (i << 2);
 		for (uint8_t bit = 0; bit < 4; bit++)
 		{
-			attribute[index] = (value & 0x08) ?  foreColor : backColor;
+			attribute->a[index] = (value & 0x08) ?  foreColor : backColor;
 			value <<= 1;
 			index++;
 		}
