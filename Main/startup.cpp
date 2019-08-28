@@ -9,14 +9,14 @@
 
 using namespace Vga;
 
-static uint8_t _screenPixels[HSIZE_CHARS * VSIZE_CHARS];
+static uint8_t _screenPixels[HSIZE_CHARS * VSIZE_PIXELS];
 static uint8_t _screenAttributes[HSIZE_CHARS * VSIZE_CHARS];
 static Attribute _defaultAttributeDefinition;
 
 static VideoSettings Video {
 	&TIMING,
 	HSIZE_CHARS, VSIZE_CHARS,
-	_screenPixels, _screenAttributes, &_defaultAttributeDefinition
+	_screenPixels, _screenAttributes, _defaultAttributeDefinition.a
 };
 
 extern "C" void initialize()

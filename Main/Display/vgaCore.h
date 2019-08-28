@@ -41,7 +41,7 @@ namespace Vga
 {
     extern uint8_t* VideoMemoryPixels;
     extern uint8_t* VideoMemoryAttributes;
-    extern Attribute* AttributeBase;
+    extern uint8_t* AttributeBase;
 
 	void InitVga(VideoSettings* videoSettings);
 

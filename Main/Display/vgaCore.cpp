@@ -24,7 +24,7 @@ namespace Vga
 {
 uint8_t* VideoMemoryPixels;
 uint8_t* VideoMemoryAttributes;
-Attribute* AttributeBase;
+uint8_t* AttributeBase;
 
 void InitHSync(Timing::Polarity polarity, int wholeLine, int syncPulse, int startDraw);
 void InitVSync(Timing::Polarity polarity, int wholeFrame, int syncPulse, int startDraw);

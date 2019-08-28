@@ -20,7 +20,7 @@ class VideoSettings
 	// video memory
 	uint8_t* ScreenPixels;
 	uint8_t* ScreenAttributes;
-	Attribute* AttributeBase;
+	uint8_t* AttributeBase;
 };
 
 }
