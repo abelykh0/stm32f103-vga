@@ -28,8 +28,8 @@ vga_draw_impl:
 	ldr pixels, [pix], #4
 	ldrb attr_offset, [attr], #1
 	and tmp1, pixels, #15
-	add attr_offset, tmp1, attr_offset, LSL #4
-	ldr tmp1, [attr_base, attr_offset, LSL #2]
+	add tmp1, tmp1, attr_offset, LSL #4
+	ldr tmp1, [attr_base, tmp1, LSL #2]
 
 	.rept 8
 		@ character 0
@@ -39,11 +39,11 @@ vga_draw_impl:
 		strb tmp1, [odr]                            @ 2
 
 		ror tmp1, #8                                @ 1
-		add attr_offset, tmp2, attr_offset, LSL #4  @ 1
+		add tmp2, tmp2, attr_offset, LSL #4  @ 1
 		strb tmp1, [odr]                            @ 2
 
 		ror tmp1, #8                                @ 1
-		ldr tmp2, [attr_base, attr_offset, LSL #2]  @ 1*
+		ldr tmp2, [attr_base, tmp2, LSL #2]  @ 1*
 		strb tmp1, [odr]                            @ 2
 
 		ror tmp1, #8                                @ 1
@@ -51,11 +51,11 @@ vga_draw_impl:
 		strb tmp1, [odr]                            @ 2
 
 		and tmp1, pixels, #15                       @ 1
-		add attr_offset, tmp1, attr_offset, LSL #4  @ 1
+		add tmp1, tmp1, attr_offset, LSL #4  @ 1
 		strb tmp2, [odr]                            @ 2
 
 		ror tmp2, #8                                @ 1
-		ldr tmp1, [attr_base, attr_offset, LSL #2]  @ 1*
+		ldr tmp1, [attr_base, tmp1, LSL #2]  @ 1*
 		strb tmp2, [odr]                            @ 2
 
 		ror tmp2, #8                                @ 1
@@ -73,11 +73,11 @@ vga_draw_impl:
 		strb tmp1, [odr]                            @ 2
 
 		ror tmp1, #8                                @ 1
-		add attr_offset, tmp2, attr_offset, LSL #4  @ 1
+		add tmp2, tmp2, attr_offset, LSL #4  @ 1
 		strb tmp1, [odr]                            @ 2
 
 		ror tmp1, #8                                @ 1
-		ldr tmp2, [attr_base, attr_offset, LSL #2]  @ 1*
+		ldr tmp2, [attr_base, tmp2, LSL #2]  @ 1*
 		strb tmp1, [odr]                            @ 2
 
 		ror tmp1, #8                                @ 1
@@ -85,11 +85,11 @@ vga_draw_impl:
 		strb tmp1, [odr]                            @ 2
 
 		and tmp1, pixels, #15                       @ 1
-		add attr_offset, tmp1, attr_offset, LSL #4  @ 1
+		add tmp1, tmp1, attr_offset, LSL #4  @ 1
 		strb tmp2, [odr]                            @ 2
 
 		ror tmp2, #8                                @ 1
-		ldr tmp1, [attr_base, attr_offset, LSL #2]  @ 1*
+		ldr tmp1, [attr_base, tmp1, LSL #2]  @ 1*
 		strb tmp2, [odr]                            @ 2
 
 		ror tmp2, #8                                @ 1
@@ -107,11 +107,11 @@ vga_draw_impl:
 		strb tmp1, [odr]                            @ 2
 
 		ror tmp1, #8                                @ 1
-		add attr_offset, tmp2, attr_offset, LSL #4  @ 1
+		add tmp2, tmp2, attr_offset, LSL #4  @ 1
 		strb tmp1, [odr]                            @ 2
 
 		ror tmp1, #8                                @ 1
-		ldr tmp2, [attr_base, attr_offset, LSL #2]  @ 1*
+		ldr tmp2, [attr_base, tmp2, LSL #2]  @ 1*
 		strb tmp1, [odr]                            @ 2
 
 		ror tmp1, #8                                @ 1
@@ -119,11 +119,11 @@ vga_draw_impl:
 		strb tmp1, [odr]                            @ 2
 
 		and tmp1, pixels, #15                       @ 1
-		add attr_offset, tmp1, attr_offset, LSL #4  @ 1
+		add tmp1, tmp1, attr_offset, LSL #4  @ 1
 		strb tmp2, [odr]                            @ 2
 
 		ror tmp2, #8                                @ 1
-		ldr tmp1, [attr_base, attr_offset, LSL #2]  @ 1*
+		ldr tmp1, [attr_base, tmp1, LSL #2]  @ 1*
 		strb tmp2, [odr]                            @ 2
 
 		ror tmp2, #8                                @ 1
@@ -141,11 +141,11 @@ vga_draw_impl:
 		strb tmp1, [odr]                            @ 2
 
 		ror tmp1, #8                                @ 1
-		add attr_offset, tmp2, attr_offset, LSL #4  @ 1
+		add tmp2, tmp2, attr_offset, LSL #4  @ 1
 		strb tmp1, [odr]                            @ 2
 
 		ror tmp1, #8                                @ 1
-		ldr tmp2, [attr_base, attr_offset, LSL #2]  @ 1*
+		ldr tmp2, [attr_base, tmp2, LSL #2]  @ 1*
 		strb tmp1, [odr]                            @ 2
 
 		ror tmp1, #8                                @ 1
@@ -153,11 +153,11 @@ vga_draw_impl:
 		strb tmp1, [odr]                            @ 2
 
 		and tmp1, pixels, #15                       @ 1
-		add attr_offset, tmp1, attr_offset, LSL #4  @ 1
+		add tmp1, tmp1, attr_offset, LSL #4  @ 1
 		strb tmp2, [odr]                            @ 2
 
 		ror tmp2, #8                                @ 1
-		ldr tmp1, [attr_base, attr_offset, LSL #2]  @ 1*
+		ldr tmp1, [attr_base, tmp1, LSL #2]  @ 1*
 		strb tmp2, [odr]                            @ 2
 
 		ror tmp2, #8                                @ 1
