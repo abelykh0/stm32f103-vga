@@ -17,7 +17,6 @@ void draw_column(uint8_t row, uint16_t y0, uint16_t y1, uint8_t c);
 void draw_row(uint8_t line, uint16_t x0, uint16_t x1, uint8_t c);
 void sp(uint8_t x, uint8_t y, char c);
 void cursorNext();
-void print_char(uint8_t x, uint8_t y, unsigned char c, uint8_t attribute);
 void InvertColor();
 }
 

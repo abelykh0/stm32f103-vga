@@ -27,6 +27,7 @@ namespace Vga
     void setCursorPosition(uint8_t x, uint8_t y);
 	void print(const char *str, uint8_t attribute);
 	void print(uint8_t c, uint8_t attribute);
+	void print_char(uint8_t x, uint8_t y, unsigned char c, uint8_t attribute);
 	void printAt(uint8_t x, uint8_t y, const char* str, uint8_t attribute);
 }
 
