@@ -46,6 +46,10 @@ extern "C" void setup()
     	printAt(0, i, "\x0BA", 0); // ║
     	printAt(HSIZE_CHARS - 1, i, "\x0BA", 0); // ║
     }
+
+    printAt(0, 3, "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890", 0); // ╔
+    printAt(1, 4, "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890", 0); // ╔
+    printAt(2, 5, "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890", 0); // ╔
 }
 
 extern "C" void loop()
