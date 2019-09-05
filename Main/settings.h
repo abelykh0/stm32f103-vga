@@ -7,9 +7,9 @@
 //#define BACK_COLOR 0x00
 //#define FORE_COLOR 0x0C
 
-// Resolution 384x296
+// Resolution 352x296
 #define TIMING timing_800x600_56hz
-#define	HSIZE_CHARS  48
+#define	HSIZE_CHARS  44
 #define	VSIZE_CHARS  37
 
 #endif /* __VIDEOSETTINGS_H__ */
