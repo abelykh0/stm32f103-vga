@@ -47,7 +47,6 @@ extern "C" void setup()
     	printAt(HSIZE_CHARS - 1, i, "\x0BA", 0); // ║
     }
 
-
     for (uint16_t character = 1; character <= 255; character++)
     {
     	print_char(character % (HSIZE_CHARS - 2) + 1, character / (HSIZE_CHARS - 2) + 5, character, 0);
