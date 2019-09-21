@@ -63,7 +63,7 @@ void Vga::InitVga(VideoSettings* videoSettings)
     gpioInit.Speed = GPIO_SPEED_FREQ_HIGH;
     HAL_GPIO_Init(GPIOB, &gpioInit);
 
-    GPIO_ODR = (volatile uint8_t *)(GPIOB_BASE + 21);
+    GPIO_ODR = (volatile uint8_t *)(GPIOB_BASE + 13);
 
 	double realPixelsPerPixel = timing->pixel_frequency_mhz / 18;
 	uint16_t usedHorizontalPixels = HSIZE_CHARS * 8 * realPixelsPerPixel;
